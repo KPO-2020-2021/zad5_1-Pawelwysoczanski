@@ -188,8 +188,8 @@ void Dron::RysujDroge(double droga, double kat)
     trasa.push_back(nastepny);
     nastepny[2] = 100;
     trasa.push_back(nastepny);
-    nastepny[0] += droga * cos(kat * M_PI / 180);
-    nastepny[1] += droga * sin(kat * M_PI / 180);
+    nastepny[0] = nastepny[0] + droga * cos(kat * M_PI / 180);
+    nastepny[1] = nastepny[1] + droga * sin(kat * M_PI / 180);
     trasa.push_back(nastepny);
     nastepny[2] = 0;
     trasa.push_back(nastepny);
@@ -199,8 +199,188 @@ void Dron::RysujDroge(double droga, double kat)
     plik.open("../dat/trasa.dat", std::ios::out);
     for (int i = 0; i < (int)trasa.size(); i++)
     {
-        cout << trasa[i] << endl;
         plik << trasa[i] << std::endl;
     }
     plik.close();
+}
+
+void Dron::Modyfikacja()
+{
+    double droga = 100;
+    double kat = 45;
+
+    cout << "Przelot do miejsca rozpoczecia zataczania okregu" << endl;
+    for (int i = 0; i < 100; i++)
+    {
+        kopia = orginalny;
+        for (int j = 0; j < 4; j++)
+            wir_k[j] = wir_o[j];
+        Wznoszenie(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
+    cout << "Obrot.." << endl;
+    for (int i = 0; i < kat; i++)
+    {
+        kopia = orginalny;
+        for (int i = 0; i < 4; i++)
+            wir_k[i] = wir_o[i];
+        Obrot(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
+    cout << "Przelot" << endl;
+    for (int i = 0; i < 200; i++)
+    {
+        kopia = orginalny;
+        for (int j = 0; j < 4; j++)
+            wir_k[j] = wir_o[j];
+        Przesun(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
+    cout << "Opadanie" << endl;
+    for (int i = 0; i < 100; i++)
+    {
+        kopia = orginalny;
+        for (int j = 0; j < 4; j++)
+            wir_k[j] = wir_o[j];
+        Wznoszenie(-1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
+    Lacze.DodajNazwePliku("../dat/trasa.dat", PzG::RR_Ciagly, 2);
+    cout << "Rozpoczecie zataczania okregu" << endl;
+    RysujDroge(100, 90);
+    for (int i = 0; i < 100; i++)
+    {
+        kopia = orginalny;
+        for (int j = 0; j < 4; j++)
+            wir_k[j] = wir_o[j];
+        Wznoszenie(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
+    cout << "Obrot.." << endl;
+    for (int i = 0; i < kat; i++)
+    {
+        kopia = orginalny;
+        for (int i = 0; i < 4; i++)
+            wir_k[i] = wir_o[i];
+        Obrot(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
+    RysujDroge(droga, kat);
+    for (int i = 0; i < droga; i++)
+    {
+        kopia = orginalny;
+        for (int j = 0; j < 4; j++)
+            wir_k[j] = wir_o[j];
+        Przesun(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
+    RysujDroge(droga, kat);
+    cout << "Wlasciwy punkt rozpoczecia" << endl;
+    cout << "Obrot.." << endl;
+    for (int i = 0; i < 90; i++)
+    {
+        kopia = orginalny;
+        for (int i = 0; i < 4; i++)
+            wir_k[i] = wir_o[i];
+        Obrot(-1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
+    for (int i = 0; i < droga; i++)
+    {
+        kopia = orginalny;
+        for (int j = 0; j < 4; j++)
+            wir_k[j] = wir_o[j];
+        Przesun(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
+    for (int i = 0; i < 7; i++)
+    {
+        RysujDroge(droga, kat);
+
+        cout << "Obrot.." << endl;
+        for (int i = 0; i < kat; i++)
+        {
+            kopia = orginalny;
+            for (int i = 0; i < 4; i++)
+                wir_k[i] = wir_o[i];
+            Obrot(-1);
+            ObrotRotrow();
+            Zapisz();
+            Lacze.Rysuj();
+            usleep(1000);
+        }
+        for (int i = 0; i < droga; i++)
+        {
+            kopia = orginalny;
+            for (int j = 0; j < 4; j++)
+                wir_k[j] = wir_o[j];
+            Przesun(1);
+            ObrotRotrow();
+            Zapisz();
+            Lacze.Rysuj();
+            usleep(1000);
+        }
+    }
+    cout << "Porot do pozycji" << endl;
+    cout << "Obrot.." << endl;
+    for (int i = 0; i < 135; i++)
+    {
+        kopia = orginalny;
+        for (int i = 0; i < 4; i++)
+            wir_k[i] = wir_o[i];
+        Obrot(-1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
+    for (int i = 0; i < droga; i++)
+    {
+        kopia = orginalny;
+        for (int j = 0; j < 4; j++)
+            wir_k[j] = wir_o[j];
+        Przesun(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
+    for (int i = 0; i < 100; i++)
+    {
+        kopia = orginalny;
+        for (int j = 0; j < 4; j++)
+            wir_k[j] = wir_o[j];
+        Wznoszenie(-1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(1000);
+    }
 }

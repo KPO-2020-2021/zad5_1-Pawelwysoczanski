@@ -42,6 +42,10 @@ void Scena::RuchDronem()
     TabDronow[1]->Sterowanie();
   }
 }
+void Scena::RuchDronemMod()
+{
+  TabDronow[1]->Modyfikacja();
+}
 bool Scena::Interfejs()
 {
   cout << "Wybor aktywnego drona" << endl;
