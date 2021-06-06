@@ -1,9 +1,12 @@
-#pragma once
-
+#ifndef LACZE_DO_GNUPLOTA_HH
+#define LACZE_DO_GNUPLOTA_HH
 #include <string>
 #include <list>
 #include <vector>
 
+#ifdef __GNUG__
+#pragma interface
+#endif
 
 /*!
  * \file  lacze_do_gnuplota.hh
@@ -692,3 +695,5 @@ class LaczeDoGNUPlota {
 
 
 }
+
+#endif

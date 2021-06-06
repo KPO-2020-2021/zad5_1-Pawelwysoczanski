@@ -17,14 +17,17 @@ class Prostopadloscian : public BrylaGeometryczna
 {
 
 public:
-  /*!
-  *\brief Konstruktor parametryczny klasy Prostopadloscian
+    /*!
+  *\brief Konstruktor parametryczny klasy Prostopadloscian.
   */
-  Prostopadloscian(Vector3D SrodekBryly, double szerokosc, double dlugosc, double wysokosc, std::string Nazwa = "bryly_wzorcowe/prostopadloscian.dat");
-  /*!
-  *\brief Destrukto klasy Prostopadloscian.
+    Prostopadloscian(Vector3D srodek = Vector3D(), double x = 100, double y = 50, double z = 50, std::string nazwa = "../dat/prostopadloscian.dat");
+    /*!
+  *\brief Destruktor klasy Prostopadloscian.
   */
-  ~Prostopadloscian() { delete Wymiar; }
+    ~Prostopadloscian()
+    {
+        delete wymiaryBryly;
+    }
 };
 
 #endif

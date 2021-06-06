@@ -1,11 +1,11 @@
-#ifndef DRON_HH_
-#define DRON_HH_
+#ifndef DRON_HH
+#define DRON_HH
 
 #include "Prostopadloscian.hh"
 #include "Graniastoslup.hh"
 #include "lacze_do_gnuplota.hh"
-#include <unistd.h> 
-#define CZAS_PRZELOTU 10000
+#include <unistd.h> // biblioteka dla usleep
+#define CZAS 20000
 
 /*!
 *\file
@@ -13,88 +13,99 @@
 */
 
 /*!
-*\brief Klasa Dron
-*Klasa definiuje pojecie Drona.
-*Klasa tworzy model drona z bryl geometrycznych.
+*\ 
+*Klasa definiuje pojecie Drona sklasdajacego sie z korpusu w postaci prostopadloscianu
+*oraz 4 rotorow zbudowanych z graniastoslupow.
 */
-
 class Dron
 {
-private:
-/*!
-*\brief Przechowuje oryginalny prostopadloscian.
-*/
-    Prostopadloscian oryginalny;
   /*!
-*\brief Przechowuje kopie oryginalnego prostopadloscianu.
-*/
-    Prostopadloscian kopia;
-/*!
-*\brief Przechowuje tablice oryginalnych rotorow.
-*/
-    Graniastoslup wir_o[4];
+  *\brief Trasa przelotu drona.
+  *Przechowuje wektory polozenia przelotu drona.
+  */
+  std::vector<Vector3D> trasa;
   /*!
-*\brief Przechowuje tablice kopi oryginalnych rotorow.
-*/
-    Graniastoslup wir_k[4];
-/*!
-*\brief 
-*/
-    Macierz3x3 obrot;
+  *\brief 
+  */
+  PzG::LaczeDoGNUPlota &Lacze;
   /*!
-*\brief Przechowuje informacje o tym jaka droge ma pokonac dron w czasie przelotu.
-*/
-    Vector3D droga;
-/*!
-*\brief Pojemnik na punkty trasy przelotu drona.
-*/
-    std::vector<Vector3D> trasa;
+  *\brief Oryginalny prostopadloscian.
+  *Przechowuje oryginalny prostopadloscina.
+  */
+  Prostopadloscian orginalny;
   /*!
-*\brief 
-*/
-    PzG::LaczeDoGNUPlota &Lacze;
-/*!
-*\brief Przechowuje informacje o zadanym kacie o jaki ma sie obrocic dron.
-*/
-    double kat;
+  *\brief Kopia prostopadloscianu
+  *Przechowuje kopie prostopadloscianu.
+  */
+  Prostopadloscian kopia;
   /*!
-*\brief Przechowuje informacje o tym ktory dron jest aktywny.
-*/
-    int nr;
+  *\brief Oryginalne rotory drona.
+  *Przechowuje oryginalna tablice Graniastoslupow.
+  */
+  Graniastoslup6 wir_o[4];
+  /*!
+  *\brief Kopia oryginalnych rotorow drona.
+  *Przechowuje kopie oryginalnej tabliczy Graniastoslupow.
+  */
+  Graniastoslup6 wir_k[4];
+  /*!
+  *\brief Macierz obrotu drona.
+  *Przechowuje macierz obrotu drona.
+  */
+  Macierz3x3 obrot;
+  /*!
+  *\brief Wektor punktu docelowego drona.
+  *Przechowuje wpolrzedne drogi drona.
+  */
+  Vector3D droga;
+  /*!
+  *\brief Kat obrotu drona.
+  *Przechowuje kat o jaki ma sie obrocic dron.
+  */
+  double kat;
+  /*!
+  *\brief Id drona.
+  *Przechowuje nr id drona.
+  */
+  int id;
 
 public:
-/*!
-*\brief Konstrukto parametryczny klasy Dron
-*/
-    Dron(int nr, PzG::LaczeDoGNUPlota &Lacze, Vector3D pozycja);
-    /*!
-*\brief Metoda klasy Dron wykonuje wznoszenie drona.
-*/
-    void Wznoszenie(double droga);
   /*!
-*\brief Metoda klasy Dron wykonuje przesuniecie drona. 
-*/
-    void Przesun(double droga);
+  *\brief Konstruktor bezparametryczny klasy dron. 
+  */
+  Dron();
   /*!
-*\brief Metoda klasy Dron wykonuje obrot drona.
-*/
-    void Obrot(double kat);
+  *\brief Konstruktor parametryczny klasy dron.
+  */
+  Dron(int id, PzG::LaczeDoGNUPlota &Lacze, Vector3D pozycja);
   /*!
-*\brief Metoda klasy Dron wykonuje obrot rotorow w czasie przelotu drona.
-*/
-    void ObrotRotrow();
+  *\brief Metoda ktora wykonuje operacje wznoszenia drona na wysokosc przelotu.
+  */
+  void Wznoszenie(double droga);
   /*!
-*\brief Metoda klasy Dron wykonuje zapis drona do pliku.
-*/
-    void Zapis();
+  *\brief Metoda ktora wykonuje operacje przesuniecia drona.
+  */
+  void Przesun(double droga);
   /*!
-*\brief Metoda klasy Dron tworzaca interfejs sterowania dronem. 
-*/
-    void Sterowanie();
+  *\brief Metoda ktora wykonuje operacje obrotu drona.
+  */
+  void Obrot(double kat);
   /*!
-*\brief Metoda klasy Dron rysujaca droge po jakiej porusza sie dron.
-*/
-    void RysujDroge(double droga);
+  *\brief Metoda ktora wykonuje operacje obrotow rotorow drona.
+  */
+  void ObrotRotrow();
+  /*!
+  *\brief Metoda ktora wykonuje operacje zapisu drona do pliku.
+  */
+  void Zapisz();
+  /*!
+  *\brief Metoda ktora wykonuje operacje sterowania dronem.
+  */
+  void Sterowanie();
+  /*!
+  *\brief Metoda ktora wykonuje operacje rysowania trasy przelotu drona.   
+  */
+  void RysujDroge(double droga, double kat);
 };
 
 #endif

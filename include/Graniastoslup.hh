@@ -1,30 +1,28 @@
-#ifndef GRANIASTOSLUP_HH_
-#define GRANIASTOSLUP_HH_
+#ifndef GRANIASTOSLUP6_HH
+#define GRANIASTOSLUP6_HH
 
 #include "BrylaGeometryczna.hh"
-
 /*!
 *\file
 *\brief Definicja klasy Prostopadloscian.
 */
 
 /*!
-*\brief Klasa Graniastoslup
-*Klasa definiuje pojecie Graniastoslupu.
+*\brief Klasa Graniastoslup.
+*Klasa definiuje pojecie Graniastoslupa.
 *Klasa dziedziczy po klasie rodzica BrylaGeometryczna.
 */
-class Graniastoslup : public BrylaGeometryczna
+class Graniastoslup6 : public BrylaGeometryczna
 {
-
 public:
-   /*!
-*\brief Konstruktor parametryczny klasy Graniastoslup.
+    /*!
+*\brief Konstruktor parametryczny klasy Graniastoslup
 */
-   Graniastoslup(Vector3D SrodekBryly, double promien = 40, double z = 10, std::string Nazwa = "bryly_wzorcowe/szescian.dat");
-   /*!
-   *\brief Destruktor klasy Garaniastoslup.
-   */
-   ~Graniastoslup() { delete Wymiar; }
+    Graniastoslup6(Vector3D srodek = Vector3D(), double z = 10, double promien = 25, std::string nazwa = "../dat/garniastoslup.dat");
+    /*!
+*\brief Destruktor klasy Graniastoslup
+*/
+    ~Graniastoslup6() { delete wymiaryBryly; }
 };
 
 #endif

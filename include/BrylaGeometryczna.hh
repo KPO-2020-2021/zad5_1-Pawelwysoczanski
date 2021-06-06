@@ -1,11 +1,10 @@
-#ifndef BRYLAGEOMETRYCZNA_HH_
-#define BRYLAGEOMETRYCZNA_HH_
+#ifndef BRYLAGEOMETRYCZNA_HH
+#define BRYLAGEOMETRYCZNA_HH
 
 #include "Wektor3D.hh"
-#include "Mcierz3x3.hh"
+#include "Macierz3x3.hh"
 #include <fstream>
 #include <vector>
-
 /*!
 *\file
 *\brief Definicja klasy BrylaGeometryczna.
@@ -18,81 +17,88 @@
 */
 class BrylaGeometryczna
 {
-
 protected:
-    /*!
-  *\brief Wskaznik na wektor przechowujacy
-  */
-    Vector3D *Wymiar;
-    /*!
-    *\brief Zmienna przechowujaca pozycje wierzcholkow bryly geometrycznej.
-    */
-    std::vector<Vector3D> Wierz;
-    /*!
-    *\brief Wektor przechowujacy polozenie srodka bryly geometrycznej.
-    */
-    Vector3D SrodekBryly;
-    /*!
-    *\brief Zmienna przechowujaca nazwe pliku docelowego dla bryly geometrycznej.
-    */
-    std::string Nazwa;
+   /*!
+ *\brief Wymiary Bryly.
+ *Wskaznik na wektor przechowujacy wymiary bryly.
+ */
+   Vector3D *wymiaryBryly;
+   /*!
+ *\brief Wierzcholki bryly.
+ *Pojemnik typu Vector3D przechowujacy wiercholki bryly.
+ */
+   std::vector<Vector3D> WierzBryly;
+   /*!
+ *\brief Srodek bryly.
+ *Przechowuje wektor polozenia srodka bryly.
+ */
+   Vector3D SrodekBryly;
+   /*!
+ *\brief Nazwa pliku.
+ *Przechowuje nazwe pliku zapisu bryly.
+ */
+   std::string NazwaPliku;
 
 public:
-    /*!
-*\brief 
-*/
-    Vector3D &operator[](int index)
-    {
-        return Wierz[index];
-    }
-    /*!
-*\brief 
-*/
-    Vector3D
-    operator[](int index) const
-    {
-        return Wierz[index];
-    }
-    /*!
-*\brief 
-*/
-    void SetSrodekBryly(Vector3D srodek)
-    {
-        this->SrodekBryly = SrodekBryly;
-    }
-    /*!
-*\brief 
-*/
-    void SetNazwa(std::string nazwa)
-    {
-        this->Nazwa = Nazwa;
-    }
-    /*!
-*\brief 
-*/
-    Vector3D GetSrodekBryly() const
-    {
-        return SrodekBryly;
-    }
-    /*!
-*\brief 
-*/
-    std::string GetNazwa() const
-    {
-        return Nazwa;
-    }
-    /*!
-*\brief Metoda klasy BrylaGeometryczna wykonujaca przesuniecie bryly o zadany wektor.
-*/
-    void Przesun(Vector3D przesun);
-    /*!
-*\brief Metoda klasy BrylaGeometryczna wykonujaca obrot bryly o zadany kat. 
-*/
-    void Translacja(Macierz3x3 obrot);
-    /*!
-*\brief Metoda klasy BrylaGeometryczna zapisujaca do pliku ksztalt bryly.
-*/
-    void Zapisz();
+   /*!
+ *\brief Operator zabezpieczajacy wyjscia poza zadana skale
+ */
+   Vector3D &operator[](int index)
+   {
+      return WierzBryly[index];
+   }
+   /*!
+ *\brief 
+ */
+   Vector3D operator[](int index) const
+   {
+      return WierzBryly[index];
+   }
+   /*!
+ *\brief Metoda ktora ustawia srodek bryly.
+ */
+   void SetSrodekBryly(Vector3D SrodekBryly)
+   {
+      this->SrodekBryly = SrodekBryly;
+   }
+   /*!
+ *\brief Metoda ktora ustawia nazwe pliku zapisu bryly.
+ */
+   void SetNazwaPliku(std::string NazwaPliku)
+   {
+      this->NazwaPliku = NazwaPliku;
+   }
+   /*!
+ *\brief Metoda ktora zwraca srodek bryly.
+ */
+   Vector3D GetSrodekBryly() const
+   {
+      return SrodekBryly;
+   }
+   /*!
+ *\brief Metoda ktora zwraca nazwe pliku zapisu bryly.
+ */
+   std::string GetNazwaPliku() const
+   {
+      return NazwaPliku;
+   }
+
+   /*!
+ *\brief Metoda ktora wykonuje operacje przesuniecia bryly.
+ */
+   void Przesun(Vector3D przes);
+   /*!
+ *\brief Metoda ktora wykonuje operacje translacji bryly.
+ */
+   void Translacja(Macierz3x3 obr);
+   /*!
+ *\brief Metoda ktora wykonuje operacje zapisu bryly do pliku
+ */
+   void Zapisz();
+   /*!
+ *\brief Destruktor klasy BrylaGeometryczna. 
+ */
+   ~BrylaGeometryczna() { delete wymiaryBryly; }
 };
 
 #endif

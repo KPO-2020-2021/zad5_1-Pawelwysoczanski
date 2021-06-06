@@ -2,20 +2,18 @@
 #define WEKTOR3D_HH
 
 #include "Wektor.hh"
-
-/*!
- * \file
- * \brief Plik zawiera ...
- *
- * Plik ...
- */
+#include <iomanip>
 
 /*!
  * \brief Klasa Wektor3D ma być instancją szablonu Wektor<>
  *
- *  Tutaj trzeba opisac instancję szablonu. Jakie pojecie ona modeluje 
- *  i jakie ma glowne cechy.
+ *  Zdefiniowanie nowego typu Wektor3D.
+ *  Jest to jednowymiarowa tablica o trzech polach.
+ *  Zawiera ona informacje o danych współrzędnych trójwymiarowego 
+ *  wektora. Przeciążenie operatora zapewnia nam odwołanie się do
+ *  pól wektora.
  */
+
 typedef Vector<3> Vector3D;
 
 #endif
