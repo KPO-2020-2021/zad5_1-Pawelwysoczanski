@@ -20,6 +20,7 @@ class Scena
 public:
     Scena();
     void RuchDronem();
+    void RuchDronemMod();
     void Rysuj();
     bool Interfejs();
     ~Scena();
