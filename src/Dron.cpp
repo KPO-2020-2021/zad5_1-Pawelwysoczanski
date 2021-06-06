@@ -283,7 +283,7 @@ void Dron::Modyfikacja()
         Lacze.Rysuj();
         usleep(1000);
     }
-    RysujDroge(droga, kat);
+  //  RysujDroge(droga, kat);
     for (int i = 0; i < droga; i++)
     {
         kopia = orginalny;
@@ -295,7 +295,7 @@ void Dron::Modyfikacja()
         Lacze.Rysuj();
         usleep(1000);
     }
-    RysujDroge(droga, kat);
+    //RysujDroge(droga, kat);
     cout << "Wlasciwy punkt rozpoczecia" << endl;
     cout << "Obrot.." << endl;
     for (int i = 0; i < 90; i++)
@@ -322,7 +322,7 @@ void Dron::Modyfikacja()
     }
     for (int i = 0; i < 7; i++)
     {
-        RysujDroge(droga, kat);
+      //  RysujDroge(droga, kat);
 
         cout << "Obrot.." << endl;
         for (int i = 0; i < kat; i++)
