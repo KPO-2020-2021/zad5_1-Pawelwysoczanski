@@ -2,11 +2,11 @@
 
 
 ## Braki
--Brak dokumentacji.
--Brak testów.
--Brak zadanej modyfikacji.
--Brak wyliczenia i podania polozenia dronów.
+- Brak dokumentacji.
+- Brak testów.
+- Brak zadanej modyfikacji.
+- Brak wyliczenia i podania polozenia dronów.
 
 ## Błędy.
--Trasa przelotu drona w trakcie wykonania następnego przelotu nie rysuje się poprawnie.
+- Trasa przelotu drona w trakcie wykonania następnego przelotu nie rysuje się poprawnie.
 
