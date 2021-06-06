@@ -95,7 +95,7 @@ namespace PzG {
  //  Zwraca wartosc:
  //     true - jezeli istnieje plik o nazwie zawartej w zmiennej NazwaPliku.
  //             Zostaje on ponadto dodany do listy plikow z danymi 
-   //             dla gnuplota.
+ //             dla gnuplota.
  //    fasle - Jezeli nie istnieje plik o nazwie zawartej w zmiennej
  //            NazwaPliku. Zadne dodatkowe dzialanie nie jest realizowane.
  //
