@@ -36,7 +36,8 @@ int main()
 
      std::cout << "a - wybierz aktywnego drona" << std::endl;
      std::cout << "p - zadaj parametry przelotu" << std::endl;
-     std::cout << "m - wyswietl menu" << std::endl
+     std::cout << "m - wyswietl menu" << std::endl;
+     std::cout << "n- modyfikacja programu " << std::endl
                << std::endl;
      std::cout << "k - koniec dzialania programu" << std::endl;
      std::cout << std::endl;
@@ -62,6 +63,9 @@ int main()
                          << std::endl;
                std::cout << "k - koniec dzialania programu" << std::endl;
                std::cout << std::endl;
+               break;
+          case 'n':
+               s.RuchDronemMod();
                break;
           default:
                break;
