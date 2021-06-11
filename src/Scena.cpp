@@ -1,5 +1,9 @@
 #include "Scena.hh"
 
+/*!
+*\brief 
+* Tworzy scene po ktorej poruszac sie beda drony.
+*/
 Scena::Scena()
 {
 
@@ -23,29 +27,44 @@ Scena::Scena()
 
   Lacze.Rysuj();
 }
+/*!
+*\brief 
+*Rysuje Scene 
+*/
 void Scena::Rysuj()
 {
 
   Lacze.Rysuj();
 }
-
+/*!
+*\brief 
+* Metoda powoduje przejscie do sterowania dronem ktorego numer zostal podany metodzie Interfejs() 
+*/
 void Scena::RuchDronem()
 {
-  int nr;
+  int nr; /*nr drona*/
   nr = this->nrDrona;
-  if (nr == 0)
+  if ((nr - 1) == 0)
   {
     TabDronow[0]->Sterowanie();
   }
-  if (nr == 1)
+  if ((nr - 1) == 1)
   {
     TabDronow[1]->Sterowanie();
   }
 }
+/*!
+*\brief 
+* Wykonuje przelot drona nr 2 po okregu.
+*/
 void Scena::RuchDronemMod()
 {
   TabDronow[1]->Modyfikacja();
 }
+/*!
+*\brief 
+* Umozliwia wybor drona.
+*/
 bool Scena::Interfejs()
 {
   cout << "Wybor aktywnego drona" << endl;
@@ -54,12 +73,12 @@ bool Scena::Interfejs()
   this->nrDrona = nr;
   if (nr < N)
   {
-    if (nr == 0)
+    if (nr == 1)
     {
       cout << "1 - Polozenie <-- Dron aktywny" << endl;
       cout << "2 - Polozenie " << endl;
     }
-    if (nr == 1)
+    if (nr == 2)
     {
       cout << "1 - Polozenie " << endl;
       cout << "2 - Polozenie <-- Dron aktywny" << endl;
@@ -71,7 +90,10 @@ bool Scena::Interfejs()
   }
   return true;
 }
-
+/*!
+*\brief 
+* Usuwa tablice dronow.
+*/
 Scena::~Scena()
 {
   delete dno;

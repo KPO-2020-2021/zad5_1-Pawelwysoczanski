@@ -2,7 +2,8 @@
 #include "Dron.hh"
 
 /*!
-*\brief Konstruktor parametryczny klasy dron.
+*\brief 
+* Konstruktor tworzy model drona ktorego elementy skladowe zapisuje osobno do pliku zlozone z prostopadloscianu oraz graniastoslupow.
 */
 Dron::Dron(int id, PzG::LaczeDoGNUPlota &Lacze, Vector3D pozycja) : Lacze(Lacze)
 {
@@ -106,7 +107,7 @@ void Dron::Sterowanie()
     cin >> kat;
     cout << "Podaj dlugosc lotu>";
     cin >> droga;
-    RysujDroge(droga, kat);
+    RysujDroge(droga);
     usleep(CZAS);
     Lacze.DodajNazwePliku("../dat/trasa.dat", PzG::RR_Ciagly, 2);
     cout << "Realizacja przelotu..." << endl;
@@ -181,15 +182,15 @@ void Dron::Sterowanie()
 /*!
   *\brief Metoda ktora wykonuje operacje rysowania trasy przelotu drona.   
   */
-void Dron::RysujDroge(double droga, double kat)
+void Dron::RysujDroge(double droga)
 {
     Vector3D nastepny = kopia.GetSrodekBryly();
     nastepny[2] = 0;
     trasa.push_back(nastepny);
     nastepny[2] = 100;
     trasa.push_back(nastepny);
-    nastepny[0] = nastepny[0] + droga * cos(kat * M_PI / 180);
-    nastepny[1] = nastepny[1] + droga * sin(kat * M_PI / 180);
+    nastepny[0] += droga * cos(kat * M_PI / 180);
+    nastepny[1] += droga * sin(kat * M_PI / 180);
     trasa.push_back(nastepny);
     nastepny[2] = 0;
     trasa.push_back(nastepny);
@@ -203,7 +204,10 @@ void Dron::RysujDroge(double droga, double kat)
     }
     plik.close();
 }
-
+/*!
+*\brief 
+* Dron nr wzlatuje na zadana wysokosc poczym przemieszcza sie do punktu rozpoczecia modyfikaci nastepnie wykonuje przelot po okregu.
+*/
 void Dron::Modyfikacja()
 {
     double droga = 100;
@@ -259,7 +263,7 @@ void Dron::Modyfikacja()
     }
     Lacze.DodajNazwePliku("../dat/trasa.dat", PzG::RR_Ciagly, 2);
     cout << "Rozpoczecie zataczania okregu" << endl;
-    RysujDroge(100, 90);
+    RysujDroge(100);
     for (int i = 0; i < 100; i++)
     {
         kopia = orginalny;
@@ -283,7 +287,7 @@ void Dron::Modyfikacja()
         Lacze.Rysuj();
         usleep(1000);
     }
-  //  RysujDroge(droga, kat);
+    RysujDroge(droga);
     for (int i = 0; i < droga; i++)
     {
         kopia = orginalny;
@@ -295,7 +299,7 @@ void Dron::Modyfikacja()
         Lacze.Rysuj();
         usleep(1000);
     }
-    //RysujDroge(droga, kat);
+    RysujDroge(droga);
     cout << "Wlasciwy punkt rozpoczecia" << endl;
     cout << "Obrot.." << endl;
     for (int i = 0; i < 90; i++)
@@ -322,7 +326,7 @@ void Dron::Modyfikacja()
     }
     for (int i = 0; i < 7; i++)
     {
-      //  RysujDroge(droga, kat);
+        RysujDroge(droga);
 
         cout << "Obrot.." << endl;
         for (int i = 0; i < kat; i++)

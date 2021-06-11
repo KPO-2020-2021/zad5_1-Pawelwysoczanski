@@ -1,7 +1,7 @@
 #include "BrylaGeometryczna.hh"
 
 /*!
- *\brief Metoda ktora wykonuje operacje przesuniecia bryly.
+ *\brief 
  * Metoda pokolei przeuswa kazdy wierzcholek bryly geometrycznej
  * o zadany wektro, na koncu przesuwa tez srodek samej bryly. 
  */
@@ -14,9 +14,9 @@ void BrylaGeometryczna::Przesun(Vector3D przes)
     SrodekBryly = SrodekBryly + przes;
 }
 /*!
- *\brief Metoda ktora wykonuje operacje translacji bryly.
+ *\brief 
  * Metoda pokolei mnozy kazdy wierzcholek bryly geometrycznej 
- * razy maciesz, na koniec operacje wykonuje rowniez na srodku
+ * razy macierz, na koniec operacje wykonuje rowniez na srodku
  * bryly.
  */
 void BrylaGeometryczna::Translacja(Macierz3x3 obr)
@@ -28,7 +28,7 @@ void BrylaGeometryczna::Translacja(Macierz3x3 obr)
     SrodekBryly = obr * SrodekBryly;
 }
 /*!
- *\brief Metoda ktora wykonuje operacje zapisu bryly do pliku
+ *\brief
  * Metoda otwiera plik do ktorego przekazuje pokolei wspolrzedne wierzcholkow
  * bryly , na koniec w celu poprwanego rysowania bryly zapisu dwie pierwsze wspolrzedne.
  */

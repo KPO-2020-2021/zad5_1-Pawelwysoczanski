@@ -2,6 +2,7 @@
 
 /*!
   *\brief Konstruktor parametryczny klasy Prostopadloscian.
+  *Tworzy prostopaloscian o stalych wymiarach i zapisuje go w pliku.
   */
 Prostopadloscian::Prostopadloscian(Vector3D SrodekBryly, double x, double y, double z, std::string NazwaPliku)
 {
