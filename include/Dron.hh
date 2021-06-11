@@ -25,7 +25,7 @@ class Dron
   */
   std::vector<Vector3D> trasa;
   /*!
-  *\brief 
+  *\brief Lacze umozliwajace rysowanie w programie GNUPlot.
   */
   PzG::LaczeDoGNUPlota &Lacze;
   /*!
@@ -105,8 +105,10 @@ public:
   /*!
   *\brief Metoda ktora wykonuje operacje rysowania trasy przelotu drona.   
   */
-  void RysujDroge(double droga, double kat);
-
+  void RysujDroge(double droga);
+    /*!
+    *\brief Metoda wykonujaca zadana modyfikacje.
+    */
   void Modyfikacja();
 };
 

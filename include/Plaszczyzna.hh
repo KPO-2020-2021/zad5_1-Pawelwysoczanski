@@ -6,6 +6,11 @@
 #include <fstream>
 #include <vector>
 /*!
+*\file
+*\brief Definicja klasy Plaszczyzna.
+*/
+
+/*!
 *\brief Klasa Plaszczyzna.
 *
 * Klasa definiuje pojecie plaszczyzny sceny po ktorej porusza sie dron.
