@@ -99,19 +99,17 @@ void Dron::Zapisz()
   */
 void Dron::Sterowanie()
 {
+
     double droga;
     double kat;
 
     Zapisz();
-    cout << "Podaj kierunek lotu(kat w stopniach)>";
+    cout << "podaj kat :";
     cin >> kat;
-    cout << "Podaj dlugosc lotu>";
+    cout << "Podaj droge :";
     cin >> droga;
-    RysujDroge(droga);
-    usleep(CZAS);
     Lacze.DodajNazwePliku("../dat/trasa.dat", PzG::RR_Ciagly, 2);
-    cout << "Realizacja przelotu..." << endl;
-    cout << "Wznoszenie.." << endl;
+    cout << "Wznosznie..." << endl;
     for (int i = 0; i < 100; i++)
     {
         kopia = orginalny;
@@ -123,10 +121,8 @@ void Dron::Sterowanie()
         Lacze.Rysuj();
         usleep(CZAS);
     }
-
     if (kat > 0)
     {
-        cout << "Obrot.." << endl;
         for (int i = 0; i < kat; i++)
         {
             kopia = orginalny;
@@ -141,7 +137,6 @@ void Dron::Sterowanie()
     }
     else
     {
-        cout << "Obrot.." << endl;
         for (int i = 0; i > kat; i--)
         {
             kopia = orginalny;
@@ -152,7 +147,8 @@ void Dron::Sterowanie()
             usleep(CZAS);
         }
     }
-    cout << "Przelot" << endl;
+    RysujDroge(droga);
+    cout << "Przelot..." << endl;
     for (int i = 0; i < droga; i++)
     {
         kopia = orginalny;
@@ -164,7 +160,7 @@ void Dron::Sterowanie()
         Lacze.Rysuj();
         usleep(CZAS);
     }
-    cout << "Opadanie" << endl;
+    cout << "Opadanie..." << endl;
     for (int i = 0; i < 100; i++)
     {
         kopia = orginalny;
@@ -177,13 +173,13 @@ void Dron::Sterowanie()
         usleep(CZAS);
     }
     Lacze.UsunOstatniaNazwe();
-    Lacze.Rysuj();
 }
 /*!
   *\brief Metoda ktora wykonuje operacje rysowania trasy przelotu drona.   
   */
 void Dron::RysujDroge(double droga)
 {
+    std::cout << "Rysuje sciezke przelotu" << endl;
     Vector3D nastepny = kopia.GetSrodekBryly();
     nastepny[2] = 0;
     trasa.push_back(nastepny);
@@ -200,6 +196,7 @@ void Dron::RysujDroge(double droga)
     plik.open("../dat/trasa.dat", std::ios::out);
     for (int i = 0; i < (int)trasa.size(); i++)
     {
+
         plik << trasa[i] << std::endl;
     }
     plik.close();
@@ -223,7 +220,7 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
     cout << "Obrot.." << endl;
     for (int i = 0; i < kat; i++)
@@ -235,7 +232,7 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
     cout << "Przelot" << endl;
     for (int i = 0; i < 200; i++)
@@ -247,7 +244,7 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
     cout << "Opadanie" << endl;
     for (int i = 0; i < 100; i++)
@@ -259,11 +256,10 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
     Lacze.DodajNazwePliku("../dat/trasa.dat", PzG::RR_Ciagly, 2);
     cout << "Rozpoczecie zataczania okregu" << endl;
-    RysujDroge(100);
     for (int i = 0; i < 100; i++)
     {
         kopia = orginalny;
@@ -273,7 +269,7 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
     cout << "Obrot.." << endl;
     for (int i = 0; i < kat; i++)
@@ -285,9 +281,9 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
-    RysujDroge(droga);
+    RysujDroge(100);
     for (int i = 0; i < droga; i++)
     {
         kopia = orginalny;
@@ -297,9 +293,8 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
-    RysujDroge(droga);
     cout << "Wlasciwy punkt rozpoczecia" << endl;
     cout << "Obrot.." << endl;
     for (int i = 0; i < 90; i++)
@@ -311,8 +306,9 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
+    RysujDroge(droga);
     for (int i = 0; i < droga; i++)
     {
         kopia = orginalny;
@@ -322,12 +318,10 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
     for (int i = 0; i < 7; i++)
     {
-        RysujDroge(droga);
-
         cout << "Obrot.." << endl;
         for (int i = 0; i < kat; i++)
         {
@@ -338,8 +332,9 @@ void Dron::Modyfikacja()
             ObrotRotrow();
             Zapisz();
             Lacze.Rysuj();
-            usleep(1000);
+            usleep(CZAS);
         }
+        RysujDroge(droga);
         for (int i = 0; i < droga; i++)
         {
             kopia = orginalny;
@@ -349,7 +344,7 @@ void Dron::Modyfikacja()
             ObrotRotrow();
             Zapisz();
             Lacze.Rysuj();
-            usleep(1000);
+            usleep(CZAS);
         }
     }
     cout << "Porot do pozycji" << endl;
@@ -363,8 +358,9 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
+    RysujDroge(droga);
     for (int i = 0; i < droga; i++)
     {
         kopia = orginalny;
@@ -374,7 +370,7 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
     for (int i = 0; i < 100; i++)
     {
@@ -385,6 +381,7 @@ void Dron::Modyfikacja()
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
-        usleep(1000);
+        usleep(CZAS);
     }
+    Lacze.UsunOstatniaNazwe();
 }

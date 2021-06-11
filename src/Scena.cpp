@@ -71,7 +71,7 @@ bool Scena::Interfejs()
   int nr;
   cin >> nr;
   this->nrDrona = nr;
-  if (nr < N)
+  if (nr < 3)
   {
     if (nr == 1)
     {
