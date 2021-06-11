@@ -45,6 +45,7 @@ int main()
 
      do
      {
+          s.Rysuj();
           std::cout << std::endl;
           std::cout << "Twoj wybor, m - menu> ";
           std::cin >> opcja;
