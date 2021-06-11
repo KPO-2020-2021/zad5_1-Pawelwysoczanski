@@ -2,7 +2,6 @@
 
 
 ## Braki
-- Brak dokumentacji.
 - Brak testów.
 - Brak wyliczenia i podania polozenia dronów.
 
