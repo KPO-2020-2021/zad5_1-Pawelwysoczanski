@@ -5,7 +5,7 @@
 #include "Graniastoslup.hh"
 #include "lacze_do_gnuplota.hh"
 #include <unistd.h> // biblioteka dla usleep
-#define CZAS 20000
+#define CZAS 30000
 
 /*!
 *\file
@@ -62,7 +62,7 @@ class Dron
   *\brief Kat obrotu drona.
   *Przechowuje kat o jaki ma sie obrocic dron.
   */
-  double kat;
+  double kat = 0;
   /*!
   *\brief Id drona.
   *Przechowuje nr id drona.
@@ -106,7 +106,7 @@ public:
   *\brief Metoda ktora wykonuje operacje rysowania trasy przelotu drona.   
   */
   void RysujDroge(double droga);
-    /*!
+  /*!
     *\brief Metoda wykonujaca zadana modyfikacje.
     */
   void Modyfikacja();
