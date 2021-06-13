@@ -52,6 +52,7 @@ int main()
           switch (opcja)
           {
           case 'a':
+               std::cout << "Podaj numer drona ktorego chcesz aktywowac mozliwosci 1 lub 2" << std::endl;
                s.Interfejs();
                break;
           case 'p':
