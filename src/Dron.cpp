@@ -41,7 +41,7 @@ void Dron::Wznoszenie(double droga)
     kopia.Przesun(this->droga);
 }
 /*!
-  *\brief Metoda ktora wykonuje operacje przesuniecia drona.
+  *\brief Metoda ktora wykonuje operacje Przesuniecia drona.
   */
 void Dron::Przesun(double droga)
 {
@@ -53,7 +53,7 @@ void Dron::Przesun(double droga)
     kopia.Przesun(this->droga);
 }
 /*!
-  *\brief Metoda ktora wykonuje operacje obrotu drona.
+  *\brief Metoda ktora wykonuje operacje Obrotu drona.
   */
 void Dron::Obrot(double kat)
 {
@@ -64,7 +64,7 @@ void Dron::Obrot(double kat)
     kopia.Przesun(this->droga);
 }
 /*!
-  *\brief Metoda ktora wykonuje operacje obrotow rotorow drona.
+  *\brief Metoda ktora wykonuje operacje Obrotow rotorow drona.
   */
 void Dron::ObrotRotrow()
 {
@@ -73,11 +73,20 @@ void Dron::ObrotRotrow()
     if (kat == 360)
         kat = 0;
 
-    Macierz3x3 nowa;
-    nowa = nowa * mac_obr_z(kat);
+    Macierz3x3 nowa, nowa2;
+
     for (int i = 0; i < 4; i++)
     {
-        wir_k[i].Translacja(nowa);
+        if ((i + 1) % 2 == 0)
+        {
+            nowa = nowa * mac_obr_z(kat);
+            wir_k[i].Translacja(nowa);
+        }
+        else
+        {
+            nowa2 = nowa2 * mac_obr_z(-kat);
+            wir_k[i].Translacja(nowa2);
+        }
     }
 
     for (int i = 0; i < 4; i++)
@@ -104,11 +113,12 @@ void Dron::Sterowanie()
     double kat;
 
     Zapisz();
-    cout << "podaj kat :";
+    cout << "Podaj kierunek lotu (kat w stopniach)>";
     cin >> kat;
-    cout << "Podaj droge :";
+    cout << "Podaj ddlugosc lotu> ";
     cin >> droga;
     Lacze.DodajNazwePliku("../dat/trasa.dat", PzG::RR_Ciagly, 2);
+    RysujDroge(droga, kat);
     cout << "Wznosznie..." << endl;
     for (int i = 0; i < 100; i++)
     {
@@ -147,7 +157,6 @@ void Dron::Sterowanie()
             usleep(CZAS);
         }
     }
-    RysujDroge(droga);
     cout << "Przelot..." << endl;
     for (int i = 0; i < droga; i++)
     {
@@ -177,7 +186,7 @@ void Dron::Sterowanie()
 /*!
   *\brief Metoda ktora wykonuje operacje rysowania trasy przelotu drona.   
   */
-void Dron::RysujDroge(double droga)
+void Dron::RysujDroge(double droga, double kat)
 {
     std::cout << "Rysuje sciezke przelotu" << endl;
     Vector3D nastepny = kopia.GetSrodekBryly();
@@ -185,8 +194,8 @@ void Dron::RysujDroge(double droga)
     trasa.push_back(nastepny);
     nastepny[2] = 100;
     trasa.push_back(nastepny);
-    nastepny[0] += droga * cos(kat * M_PI / 180);
-    nastepny[1] += droga * sin(kat * M_PI / 180);
+    nastepny[0] += droga * cos((this->kat + kat) * M_PI / 180);
+    nastepny[1] += droga * sin((this->kat + kat) * M_PI / 180);
     trasa.push_back(nastepny);
     nastepny[2] = 0;
     trasa.push_back(nastepny);
@@ -203,139 +212,77 @@ void Dron::RysujDroge(double droga)
 }
 /*!
 *\brief 
-* Dron nr wzlatuje na zadana wysokosc poczym przemieszcza sie do punktu rozpoczecia modyfikaci nastepnie wykonuje przelot po okregu.
+* Dron nr wzlatuje na zadana wysokosc poczym  wykonuje przelot po okregu.
 */
 void Dron::Modyfikacja()
 {
-    double droga = 100;
-    double kat = 45;
+    double r = 100;
+    double a = (r * 2) / sqrt(4 + 2 * sqrt(2));
+    //promien
+    RysujDroge(r, 0);
+    Lacze.DodajNazwePliku("../dat/trasa.dat");
+    for (int i = 0; i < 100; i++)
+    {
+        kopia = orginalny;
+        for (int j = 0; j < 4; j++)
+            wir_k[j] = wir_o[j];
+        Wznoszenie(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(CZAS);
+    }
+    for (int i = 0; i < r; i++)
+    {
+        kopia = orginalny;
+        for (int j = 0; j < 4; j++)
+            wir_k[j] = wir_o[j];
+        Przesun(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(CZAS);
+    }
+    /// pierwsszy oborut
+    RysujDroge(a, 112);
+    for (int i = 0; i < 112; i++)
+    {
+        kopia = orginalny;
+        for (int i = 0; i < 4; i++)
+            wir_k[i] = wir_o[i];
+        Obrot(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(CZAS);
+    }
+    for (int i = 0; i < a; i++)
+    {
+        kopia = orginalny;
+        for (int j = 0; j < 4; j++)
+            wir_k[j] = wir_o[j];
+        Przesun(1);
+        ObrotRotrow();
+        Zapisz();
+        Lacze.Rysuj();
+        usleep(CZAS);
+    }
 
-    cout << "Przelot do miejsca rozpoczecia zataczania okregu" << endl;
-    for (int i = 0; i < 100; i++)
-    {
-        kopia = orginalny;
-        for (int j = 0; j < 4; j++)
-            wir_k[j] = wir_o[j];
-        Wznoszenie(1);
-        ObrotRotrow();
-        Zapisz();
-        Lacze.Rysuj();
-        usleep(CZAS);
-    }
-    cout << "Obrot.." << endl;
-    for (int i = 0; i < kat; i++)
-    {
-        kopia = orginalny;
-        for (int i = 0; i < 4; i++)
-            wir_k[i] = wir_o[i];
-        Obrot(1);
-        ObrotRotrow();
-        Zapisz();
-        Lacze.Rysuj();
-        usleep(CZAS);
-    }
-    cout << "Przelot" << endl;
-    for (int i = 0; i < 200; i++)
-    {
-        kopia = orginalny;
-        for (int j = 0; j < 4; j++)
-            wir_k[j] = wir_o[j];
-        Przesun(1);
-        ObrotRotrow();
-        Zapisz();
-        Lacze.Rysuj();
-        usleep(CZAS);
-    }
-    cout << "Opadanie" << endl;
-    for (int i = 0; i < 100; i++)
-    {
-        kopia = orginalny;
-        for (int j = 0; j < 4; j++)
-            wir_k[j] = wir_o[j];
-        Wznoszenie(-1);
-        ObrotRotrow();
-        Zapisz();
-        Lacze.Rysuj();
-        usleep(CZAS);
-    }
-    Lacze.DodajNazwePliku("../dat/trasa.dat", PzG::RR_Ciagly, 2);
-    cout << "Rozpoczecie zataczania okregu" << endl;
-    for (int i = 0; i < 100; i++)
-    {
-        kopia = orginalny;
-        for (int j = 0; j < 4; j++)
-            wir_k[j] = wir_o[j];
-        Wznoszenie(1);
-        ObrotRotrow();
-        Zapisz();
-        Lacze.Rysuj();
-        usleep(CZAS);
-    }
-    cout << "Obrot.." << endl;
-    for (int i = 0; i < kat; i++)
-    {
-        kopia = orginalny;
-        for (int i = 0; i < 4; i++)
-            wir_k[i] = wir_o[i];
-        Obrot(1);
-        ObrotRotrow();
-        Zapisz();
-        Lacze.Rysuj();
-        usleep(CZAS);
-    }
-    RysujDroge(100);
-    for (int i = 0; i < droga; i++)
-    {
-        kopia = orginalny;
-        for (int j = 0; j < 4; j++)
-            wir_k[j] = wir_o[j];
-        Przesun(1);
-        ObrotRotrow();
-        Zapisz();
-        Lacze.Rysuj();
-        usleep(CZAS);
-    }
-    cout << "Wlasciwy punkt rozpoczecia" << endl;
-    cout << "Obrot.." << endl;
-    for (int i = 0; i < 90; i++)
-    {
-        kopia = orginalny;
-        for (int i = 0; i < 4; i++)
-            wir_k[i] = wir_o[i];
-        Obrot(-1);
-        ObrotRotrow();
-        Zapisz();
-        Lacze.Rysuj();
-        usleep(CZAS);
-    }
-    RysujDroge(droga);
-    for (int i = 0; i < droga; i++)
-    {
-        kopia = orginalny;
-        for (int j = 0; j < 4; j++)
-            wir_k[j] = wir_o[j];
-        Przesun(1);
-        ObrotRotrow();
-        Zapisz();
-        Lacze.Rysuj();
-        usleep(CZAS);
-    }
     for (int i = 0; i < 7; i++)
     {
-        cout << "Obrot.." << endl;
-        for (int i = 0; i < kat; i++)
+        RysujDroge(a, 45);
+        for (int i = 0; i < 45; i++)
         {
             kopia = orginalny;
             for (int i = 0; i < 4; i++)
                 wir_k[i] = wir_o[i];
-            Obrot(-1);
+            Obrot(1);
             ObrotRotrow();
             Zapisz();
             Lacze.Rysuj();
             usleep(CZAS);
         }
-        RysujDroge(droga);
-        for (int i = 0; i < droga; i++)
+        for (int i = 0; i < a; i++)
         {
             kopia = orginalny;
             for (int j = 0; j < 4; j++)
@@ -347,21 +294,19 @@ void Dron::Modyfikacja()
             usleep(CZAS);
         }
     }
-    cout << "Porot do pozycji" << endl;
-    cout << "Obrot.." << endl;
-    for (int i = 0; i < 135; i++)
+
+    for (int i = 0; i < 113; i++)
     {
         kopia = orginalny;
         for (int i = 0; i < 4; i++)
             wir_k[i] = wir_o[i];
-        Obrot(-1);
+        Obrot(1);
         ObrotRotrow();
         Zapisz();
         Lacze.Rysuj();
         usleep(CZAS);
     }
-    RysujDroge(droga);
-    for (int i = 0; i < droga; i++)
+    for (int i = 0; i < r; i++)
     {
         kopia = orginalny;
         for (int j = 0; j < 4; j++)
