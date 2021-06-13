@@ -105,7 +105,7 @@ public:
   /*!
   *\brief Metoda ktora wykonuje operacje rysowania trasy przelotu drona.   
   */
-  void RysujDroge(double droga);
+  void RysujDroge(double droga, double kat);
   /*!
     *\brief Metoda wykonujaca zadana modyfikacje.
     */
