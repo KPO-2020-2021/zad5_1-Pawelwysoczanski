@@ -1,4 +1,4 @@
-#include "doctest.h"
+#include "../tests/doctest/doctest.h"
 #include "example.h"
 
 // Tests that don't naturally fit in the headers/.cpp files directly
